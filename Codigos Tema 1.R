@@ -221,3 +221,147 @@ datos |> arrange(DEPARTAMENTO, PROVINCIA, DISTRITO)
 
 datos |> arrange(DISTRITO, desc(VOTOS_P1))
 
+
+
+# Funciones de integración de datos ---------------------------------------
+
+# Ejemplo 1
+
+df1 <- data.frame(ID = c(156, 224, 984),
+                  Nombre = c("Ana", "Luis", "María"))
+df2 <- data.frame(ID = c(238, 224, 156),
+                  Ciudad = c("Lima", "Cusco", "Arequipa"))
+df1
+df2
+
+df1 |> inner_join(df2)
+
+df1 |> left_join(df2)
+
+df1 |> right_join(df2)
+
+df1 |> full_join(df2)
+
+# Ejemplo 2
+
+df1 <- data.frame(ID = c(156, 224, 984), 
+                  Nombre = c("Ana", "Luis", "María")) 
+
+df2 <- data.frame(Codigo = c(238, 224, 156), 
+                  Ciudad = c("Lima", "Cusco", "Arequipa")) 
+
+df1 |> left_join(df2, by = c("ID" = "Codigo"))
+
+df1 |> semi_join(df2, by = c("ID" = "Codigo"))
+
+df1 |> anti_join(df2, by = c("ID" = "Codigo"))
+
+# Funciones de pivoteo de datos -------------------------------------------
+
+library(tidyr)
+
+df <- data.frame(Nombre = c("Ana", "Luis", "María"),
+                 Matematica = c(15, 18, 14),
+                 Historia = c(17, 16, 19))
+
+df
+
+df_long <- pivot_longer(df, 
+                        cols = c(Matematica, Historia), 
+                        names_to = "Curso", 
+                        values_to = "Nota")
+df_long
+
+df_wide <- pivot_wider(df_long, 
+                       names_from = Curso, 
+                       values_from = Nota)
+
+df_wide
+
+
+# Manejo de fechas y horas con lubridate ----------------------------------
+
+# 1. Convertir 2026-07-15 a formato fecha
+
+fecha1a <- as.Date("2026-07-15") 
+class(fecha1)
+
+library(lubridate)
+fecha1b <- ymd("2026-07-15")
+class(fecha1b)
+
+# 2. Convertir 15/Jul/2026 a formato fecha
+
+fecha2a <- as.Date("15/Jul/2026", format = "%d/%b/%Y")
+class(fecha2a)
+
+fecha2b <- dmy("15/Jul/2026")
+class(fecha2b)
+
+# 3. Convertir 07.15.2026 a formato fecha
+
+fecha3a <- as.Date("07.15.26", format = "%m.%d.%y")
+class(fecha3a)
+
+fecha3b <- mdy("07.15.26")
+class(fecha3b)
+
+# 5. Almacenar la fecha actual en un objeto de nombre hoy.
+
+hoy <- today()
+class(hoy)
+
+# 6. Almacenar "2026-07-16 20:01:19" en formato de fecha y hora.
+
+fh <- ymd_hms("2026-07-16 20:01:19")
+class(fh)
+
+# 7. Actualizar el mes de la fecha de la pregunta anterior de modo que sea 
+# diciembre. 
+
+month(fh) <- 12
+fh
+
+# 8. Actualizar la hora de la fecha de la pregunta anterior, de modo que sea 
+# 19:18:12. 
+
+hour(fh) <- 19
+minute(fh) <- 18
+second(fh) <- 12
+fh
+
+# 9. Almacenar la fecha  y hora actual en un objeto de nombre \texttt{ahora}.
+
+ahora <- now()
+ahora
+
+# 10. Añadir 10 días a la fecha actual y almacenar en fecha10.
+
+fecha10 <- ahora + days(10)
+fecha10
+
+# 11. Añadir 3 horas a fecha10 y almacenar en fecha11.
+
+fecha11 <- fecha10 + hours(3)
+fecha11
+
+# 12. Añadir un año, 3 meses y 5 horas a fecha11 y almacenar en fecha12.
+
+fecha12 <- fecha11 + year(1) + month(3) + hour(5)
+fecha12
+
+# 13. ¿Cuántos días faltan para Navidad?
+
+fecha_hoy <- today()
+fecha_nav <- ymd(20261225)
+fecha_nav - fecha_hoy
+
+fecha_nav |> difftime(fecha_hoy)
+
+# 14. ¿El próximo año será bisiesto?
+
+2027 |> leap_year()
+
+# 15. ¿Hoy nos encontramos en un año bisiesto?
+
+today() |> leap_year()
