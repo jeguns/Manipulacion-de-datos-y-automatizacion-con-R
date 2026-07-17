@@ -184,7 +184,7 @@ datos |> filter(N_ELEC_HABIL >= 200, N_ELEC_HABIL <= 300)
 
 datos |> filter(between(N_ELEC_HABIL, 200, 300))
 
-# 9. Filtrar las mesas donde ambas variables de votos blancos o nulos tienen datos
+# 9. Filtrar las mesas donde ambas variables de votos blancos y nulos tienen datos
 
 datos |> filter(!is.na(VOTOS_VB), !is.na(VOTOS_VN))
 
@@ -195,6 +195,11 @@ datos |> filter(VOTOS_P1 / N_CVAS > 0.50)
 # 11. Filtrar las mesas donde existe una inconsistencia entre los votos y el número de ciudadanos que votaron
 
 datos |> filter(VOTOS_P1 + VOTOS_P2 + VOTOS_VB + VOTOS_VN != N_CVAS)
+
+# 12. Filtrar las mesas de los distritos cuyo nombre termine en MAR.
+
+library(stringr)
+datos |> filter(str_ends(DISTRITO, "MAR")) 
 
 
 # Función arrange ---------------------------------------------------------
