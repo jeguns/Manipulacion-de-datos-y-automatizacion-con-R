@@ -370,3 +370,38 @@ fecha_nav |> difftime(fecha_hoy)
 # 15. ¿Hoy nos encontramos en un año bisiesto?
 
 today() |> leap_year()
+
+# 16. Consultar la zona horaria configurada en la computadora.
+
+Sys.timezone()
+
+
+# 17. Mostrar las zonas horarias disponibles en R.
+
+OlsonNames()
+
+# 18. ¿Cuál es la hora EN LIMA?
+
+now(tzone = "America/Lima")
+
+# 19. ¿Cuál es la hora EN PARÍS?
+
+now(tzone = "Europe/Paris")
+
+# 20. ¿Cuál es la hora EN MELBOURNE (AUSTRALIA)?
+
+now(tzone = "Australia/Melbourne")
+
+# 21. Crear la fecha y hora 18/07/2026 a las 11 am en la zona horaria de Lima
+
+ymd_hms("2026-07-18 11:00:00", tz = "America/Lima")
+
+# 22. Crear la fecha y hora 18/07/2026 a las 11 am en la zona horaria de Singapur
+
+ymd_hms("2026-07-18 11:00:00", tz = "Asia/Singapore")
+
+# 22. Convertir la fecha y hora 18/07/2026 a las 11 am en la zona horaria de Lima a la de Madrid
+
+ymd_hms("2026-07-18 11:00:00", tz = "America/Lima") |> 
+  with_tz("Europe/Madrid")
+
