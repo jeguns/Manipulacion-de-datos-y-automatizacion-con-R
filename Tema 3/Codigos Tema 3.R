@@ -104,25 +104,45 @@ m1 |> nrow()
 m1 |> ncol()
 m1 |> rowSums()
 m1 |> colSums()
+m1 |> apply(1,sum)
+m1 |> apply(2,sum)
+m1 |> apply(2,var)
 m2 |> diag()
 m2 |> solve()
 m2 |> det()
+
 
 # Estructuras de control --------------------------------------------------
 
 ## if ----------------------------------------------------------------------
 
+### Ejemplo 1
 edad <- 20
 if(edad >= 18){print("Mayor de edad")}
 
+### Ejemplo 2
 notas <- data.frame(Alumno = c("001","002","008","015","025"),
                     Nota   = c(12,10,15,18,19))
 if(all(notas$Nota > 10)){
   print("Todas las notas son aprobatorias")
   }
 
+### Ejemplo 3
+x <- c(4, 7, 9, 12)
+if(!is.numeric(x)){
+  stop("El argumento x debe ser numérico")
+}
+mean(x)
+
+### Ejemplo 4
+x <- letters
+if(!is.numeric(x)){
+  stop("El argumento x debe ser numérico")
+}
+
 ## if else -----------------------------------------------------------------
 
+### Ejemplo 5
 edad <- 16
 if (edad >= 18){
   print("Mayor de edad")
@@ -130,6 +150,7 @@ if (edad >= 18){
     print("Menor de edad")
     }
 
+### Ejemplo 6
 notas <- data.frame(Alumno = c("001","002","008","015","025"),
                     Nota   = c(12,10,15,18,19))
 if(any(notas$Nota > 10)){
@@ -138,6 +159,7 @@ if(any(notas$Nota > 10)){
     print("Ningún estudiante obtuvo una nota mayor que 10")
   }
 
+### Ejemplo 7
 m <- c(3, 5, 7, 9, 11)
 if(length(m) %% 2 == 0){
   print("El vector tiene una cantidad par de elementos")
@@ -145,6 +167,7 @@ if(length(m) %% 2 == 0){
     print("El vector tiene una cantidad impar de elementos")
   }
 
+### Ejemplo 8
 m <- matrix(c(12, 8, 15, 10, 17, 14), nrow = 2)
 if(nrow(m) == ncol(m)){
   print("La matriz es cuadrada")
@@ -152,15 +175,17 @@ if(nrow(m) == ncol(m)){
     print("La matriz no es cuadrada")
   }
 
-
 ## ifelse() -----------------------------------------------------------------
 
+### Ejemplo 9
 edad <- c(15,18,20,16,35,14,20)
 ifelse(edad >= 18, "Mayor", "Menor")
 
+### Ejemplo 10
 matriz <- matrix(c(1,5,7,2,3,5,2,5,5), ncol = 3)
 ifelse(matriz <= 3, "Menor a 4", "Mayor a 3")
 
+### Ejemplo 11
 notas <- data.frame(Alumno = c("001","002","008","015","025"),
                     Nota   = c(12,10,15,18,19))
 library(dplyr)
@@ -170,19 +195,23 @@ notas |> mutate(Calificacion = ifelse(Nota >= 10.5, "Aprobado", "Desaprobado"))
 
 ## for ---------------------------------------------------------------------
 
+### Ejemplo 12
 for(i in 1:5){
   print(i)}
 
+### Ejemplo 13
 x <- c(5,8,2,7)
 for(i in x){
   print(i+10)}
 
+### Ejemplo 14
 x <- 1:5
 resultado <- numeric(length(x))
 for(i in seq_along(x)){
   resultado[i] <- x[i]^2 + 2*x[i]}
 resultado
 
+### Ejemplo 15
 x <- c(-5, 8, -2, 7, 0, 12)
 resultado <- numeric(length(x))
 for(i in seq_along(x)){
@@ -193,6 +222,7 @@ for(i in seq_along(x)){
   }
 resultado
 
+### Ejemplo 16
 notas <- data.frame(Alumno = c("001","002","008","015","025"),
                     Nota   = c(12,10,15,18,19))
 contador <- 0
@@ -202,6 +232,7 @@ for(i in seq_along(notas$Nota)){
   }
 contador
 
+### Ejemplo 17
 x <- c(14, 8, 23, -2, 17, 5, 20)
 mayor <- x[1]
 posicion <- 1
@@ -213,32 +244,34 @@ for(i in 2:length(x)){
 mayor
 posicion
 
+
+
 ## while -------------------------------------------------------------------
 
+### Ejemplo 18
 i <- 1
 while(i <= 5){
   print(i)
   i <- i + 1
 }
 
+### Ejemplo 19
 x <- 1
 while(x <= 200){
   print(paste("El valor de x es ",x))
   x <- x*3
 }
 
-
+### Ejemplo 20
 numero       <- 16
 aproximacion <- 1
 error        <- 1
 tolerancia   <- 0.0001
-
 while(error > tolerancia){
   nueva_aproximacion <- (aproximacion + numero/aproximacion)/2
   error              <- abs(nueva_aproximacion - aproximacion)
   aproximacion       <- nueva_aproximacion
   print(paste0("Aproximación = ", aproximacion))}
-
 aproximacion
 
 
@@ -246,6 +279,108 @@ aproximacion
 
 ## break -------------------------------------------------------------------
 
+### Ejemplo 21
+for(i in 1:10){
+  if(i == 6){
+    break
+    }
+  print(i)
+}
+
+### Ejemplo 22
+x <- c(4, 8, 12, 8, 20, 25)
+valor_buscado <- 8
+for(i in seq_along(x)){
+  print(paste0("x[",i,"]=",x[i]))
+  if(x[i] == valor_buscado){
+    posicion <- i
+    print(paste("El valor buscado se encuentra en la posición ", posicion))
+    break
+    }
+}
+
 ## next --------------------------------------------------------------------
 
+### Ejemplo 23
+for(i in 1:10){
+  if(i %% 3 == 0){
+    next
+    }
+  print(i)
+}
 
+### Ejemplo 24
+x <- c(9, -4, 16, -1, 25, 0)
+raices <- numeric(length(x))
+for(i in seq_along(x)){
+  if(x[i] < 0){
+    next
+  }
+  raices[i] <- sqrt(x[i])
+}
+raices
+
+
+# Funciones ---------------------------------------------------------------
+
+### Ejemplo 25
+primera <- function(){
+  print("Esta es mi primera función")
+}
+primera()
+
+### Ejemplo 26
+area_circulo <- function(r){
+  pi*r^2
+  }
+area_circulo(5)
+
+### Ejemplo 27
+potencia <- function(x, p = 2){
+  x^p
+}
+potencia(5)
+potencia(5,3)
+potencia(p = 3, x = 5)
+
+### Ejemplo 28
+resumir_vector <- function(x, remove_na = TRUE){
+  if(!is.numeric(x)){
+    stop("x debe ser un vector numérico")
+  }
+  if(any(x < 0 | x > 20)){
+    stop("Las notas deben estar entre 0 y 20")
+  } 
+  resultado <- c(
+    minimo  = min(x, na.rm = remove_na),
+    media   = mean(x, na.rm = remove_na),
+    mediana = median(x, na.rm = remove_na),
+    maximo  = max(x, na.rm = remove_na))
+  return(resultado)
+}
+notas <- c(1,8,9,6,15,14,11,NA,12)
+resumir_vector(notas, TRUE)
+resumir_vector(notas, FALSE)
+
+resumir_vector <- function(x, remove_na = TRUE){
+  if(!is.numeric(x)){
+    stop("x debe ser un vector numérico")
+  }
+  if(any(is.na(x))){
+    warning("Existen valores perdidos")
+  }
+  if(any(x < 0 | x > 20, na.rm = TRUE)){
+    stop("Las notas deben estar entre 0 y 20")
+  } 
+  resultado <- list(
+    datos   = x,
+    n       = length(x),
+    minimo  = min(x, na.rm = remove_na),
+    media   = mean(x, na.rm = remove_na),
+    mediana = median(x, na.rm = remove_na),
+    maximo  = max(x, na.rm = remove_na))
+  return(resultado)
+}
+notas <- c(1,8,9,6,15,14,11,NA,12)
+resumir_vector(notas, TRUE)
+resumir_vector(notas, FALSE)
