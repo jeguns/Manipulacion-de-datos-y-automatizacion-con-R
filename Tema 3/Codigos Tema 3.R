@@ -344,43 +344,32 @@ potencia(5,3)
 potencia(p = 3, x = 5)
 
 ### Ejemplo 28
-resumir_vector <- function(x, remove_na = TRUE){
-  if(!is.numeric(x)){
+resumir_vector <- function(x, remove_na = TRUE) {
+  
+  if (!is.numeric(x)) {
     stop("x debe ser un vector numérico")
   }
-  if(any(x < 0 | x > 20)){
+  
+  if (any(x < 0 | x > 20, na.rm = TRUE)) {
     stop("Las notas deben estar entre 0 y 20")
-  } 
+  }
+  
   resultado <- c(
     minimo  = min(x, na.rm = remove_na),
     media   = mean(x, na.rm = remove_na),
     mediana = median(x, na.rm = remove_na),
-    maximo  = max(x, na.rm = remove_na))
+    maximo  = max(x, na.rm = remove_na)
+  )
+  
   return(resultado)
 }
-notas <- c(1,8,9,6,15,14,11,NA,12)
+
+notas <- c(1, 8, 9, 6, 15, 14, 11, NA, 12)
 resumir_vector(notas, TRUE)
 resumir_vector(notas, FALSE)
 
-resumir_vector <- function(x, remove_na = TRUE){
-  if(!is.numeric(x)){
-    stop("x debe ser un vector numérico")
-  }
-  if(any(is.na(x))){
-    warning("Existen valores perdidos")
-  }
-  if(any(x < 0 | x > 20, na.rm = TRUE)){
-    stop("Las notas deben estar entre 0 y 20")
-  } 
-  resultado <- list(
-    datos   = x,
-    n       = length(x),
-    minimo  = min(x, na.rm = remove_na),
-    media   = mean(x, na.rm = remove_na),
-    mediana = median(x, na.rm = remove_na),
-    maximo  = max(x, na.rm = remove_na))
-  return(resultado)
-}
-notas <- c(1,8,9,6,15,14,11,NA,12)
-resumir_vector(notas, TRUE)
-resumir_vector(notas, FALSE)
+nombres <- c("Luis","Francisco","Liz","Francisca")
+resumir_vector(nombres)
+
+puntajes <- c(3,6,12,10,23)
+resumir_vector(puntajes)
